@@ -27,12 +27,21 @@ namespace MasivePrinter {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             //Agregar a la lista del listview
+            string ignoredtext = "Los siguientes archivos fueron ignorados porque no son PDFs:\r\n\r\n";
+            bool ignoredfiles = false;
+
             foreach (string file in files) {
                 if (file.ToLower().Contains(".pdf")) {
                     listView1.Items.Add(file);
-                    //string filename = file.Split('\\')[file.Split('\\').Count() - 1];
-                    //listView1.Items.Add(filename);
+ 
+                } else {
+                    ignoredfiles = true;
+                    ignoredtext += "× " + file.Split('\\')[file.Split('\\').Count() - 1] + "\r\n";
                 }
+            }
+
+            if (ignoredfiles) {
+                MessageBox.Show(ignoredtext);
             }
         }
 
